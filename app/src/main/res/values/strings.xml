@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">NetVision</string>
+    <string name="start">Start</string>
+    <string name="camera_permission_title">Camera Permission Needed</string>
+    <string name="camera_permission_message">We would like to access your camera for further processing</string>
+    <string name="nah">Nah!</string>
+    <string name="sure_go_ahead">Sure, Go Ahead!</string>
+</resources>
