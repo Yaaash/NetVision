@@ -78,12 +78,6 @@ class WelcomeActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     */
-    external fun stringFromJNI(): String
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {
             CAMERA_PERMISSION -> {
@@ -112,8 +106,6 @@ class WelcomeActivity : AppCompatActivity() {
         const val CAMERA_PERMISSION = 300
 
         init {
-            // Used to load the 'native-lib' library on application startup.
-            System.loadLibrary("native-lib")
             // Check if OpenCv is loaded or not
             // Todo : Remove these logs when pushed to LIVE
             if (OpenCVLoader.initDebug()) {

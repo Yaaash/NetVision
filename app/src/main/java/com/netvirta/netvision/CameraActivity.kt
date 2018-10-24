@@ -25,6 +25,7 @@ class CameraActivity : AppCompatActivity(), CameraBridgeViewBase.CvCameraViewLis
 
     private var callbackLoader: BaseLoaderCallback = MyLoaderCallback(this@CameraActivity)
     private var rgbaMat: Mat? = null
+    private var greyMat: Mat? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +75,7 @@ class CameraActivity : AppCompatActivity(), CameraBridgeViewBase.CvCameraViewLis
 
     override fun onCameraViewStarted(width: Int, height: Int) {
         rgbaMat = Mat(height, width, CvType.CV_8UC4)
+        greyMat = Mat(height, width, CvType.CV_8UC1)
     }
 
     override fun onCameraViewStopped() {
@@ -82,7 +84,11 @@ class CameraActivity : AppCompatActivity(), CameraBridgeViewBase.CvCameraViewLis
 
     override fun onCameraFrame(inputFrame: Mat?): Mat {
         rgbaMat = inputFrame
-        return rgbaMat!!
+        if (rgbaMat == null || greyMat == null) {
+            return rgbaMat!!
+        }
+        OpencvNativeClass.convertGray(rgbaMat?.nativeObjAddr?:0, greyMat?.nativeObjAddr?:0)
+        return greyMat!!
     }
 
 }
