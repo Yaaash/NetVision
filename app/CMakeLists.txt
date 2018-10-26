@@ -26,3 +26,4 @@ target_link_libraries( # Specifies the target library.
         ${log-lib})
 
 include_directories(C:/OpenCV-android-sdk/sdk/native/jni/include)
+include_directories(C:/OpenCV-android-sdk/sdk/native/staticlibs)

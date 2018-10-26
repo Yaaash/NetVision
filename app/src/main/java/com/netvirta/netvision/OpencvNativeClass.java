@@ -7,4 +7,8 @@ public class OpencvNativeClass {
     }
 
     public native static int convertGray(long matAddrRgba, long matAddrGray);
+
+    public native static void faceDetection(long rgbaAddress);
+
+    public native static void bodyDetection(long rgbaAddress);
 }
