@@ -22,10 +22,8 @@ JNIEXPORT void JNICALL Java_com_netvirta_netvision_OpencvNativeClass_faceDetecti
         (JNIEnv *, jclass, jlong rgbaAddress) {
 
     Mat &frame = *(Mat *) rgbaAddress;
-//    detect(frame);
+    detect(frame);
 }
-
-/*
 
 void detect(Mat& frame){
 
@@ -34,8 +32,8 @@ void detect(Mat& frame){
     //syslog(LOG_CRIT, "hello syslog");
     CascadeClassifier face_cascade;
     CascadeClassifier eyes_cascade;
-    if( !face_cascade.load( face_cascade_name ) ){ printf("--(!)Error loading\n"); return ; };
-    if( !eyes_cascade.load( eyes_cascade_name ) ){ printf("--(!)Error loading\n"); return ; };
+    if( !face_cascade.load( face_cascade_name ) ){/* printf("--(!)Error loading\n")*/; return ; };
+    if( !eyes_cascade.load( eyes_cascade_name ) ){/* printf("--(!)Error loading\n")*/; return ; };
 
 
     std::vector<Rect> faces;
@@ -45,7 +43,7 @@ void detect(Mat& frame){
     equalizeHist( frame_gray, frame_gray );
 
     //-- Detect faces
-    face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE, Size(30, 30) );
+//    face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE, Size(30, 30) );
 
     for( size_t i = 0; i < faces.size(); i++ )
     {
@@ -56,7 +54,7 @@ void detect(Mat& frame){
         std::vector<Rect> eyes;
 
         //-- In each face, detect eyes
-        eyes_cascade.detectMultiScale( faceROI, eyes, 1.1, 2, 0 |CV_HAAR_SCALE_IMAGE, Size(30, 30) );
+//        eyes_cascade.detectMultiScale( faceROI, eyes, 1.1, 2, 0 |CV_HAAR_SCALE_IMAGE, Size(30, 30) );
 
         for( size_t j = 0; j < eyes.size(); j++ )
         {
@@ -68,9 +66,6 @@ void detect(Mat& frame){
 
 }
 
-
-*/
-
 JNIEXPORT void JNICALL Java_com_netvirta_netvision_OpencvNativeClass_bodyDetection
         (JNIEnv *, jclass, jlong rgbaAddress){
     Mat& image = *(Mat *) rgbaAddress;
@@ -78,7 +73,7 @@ JNIEXPORT void JNICALL Java_com_netvirta_netvision_OpencvNativeClass_bodyDetecti
     String human_cascade_name = "/sdcard/Download/cascade/haarcascade_fullbody.xml";
 
     CascadeClassifier body_cascade;
-    if( !body_cascade.load( human_cascade_name ) ){ printf("--(!)Error loading\n"); return ; };
+    if( !body_cascade.load( human_cascade_name ) ){ /*printf("--(!)Error loading\n")*/; return ; };
 
     std::vector<Rect> bodies;
     Mat frame_gray;
@@ -86,7 +81,7 @@ JNIEXPORT void JNICALL Java_com_netvirta_netvision_OpencvNativeClass_bodyDetecti
     cvtColor( image, frame_gray, CV_BGR2GRAY );
     equalizeHist( frame_gray, frame_gray );
 
-    body_cascade.detectMultiScale( frame_gray, bodies, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE, Size(30, 30) );
+//    body_cascade.detectMultiScale( frame_gray, bodies, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE, Size(30, 30) );
 
     for(int i = 0; i< bodies.size(); i++){
         rectangle(image, Point(bodies[i].x, bodies[i].y),
