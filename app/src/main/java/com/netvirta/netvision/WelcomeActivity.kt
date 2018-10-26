@@ -69,7 +69,10 @@ class WelcomeActivity : AppCompatActivity() {
             } else {
                 ActivityCompat.requestPermissions(
                     this,
-                    arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION
+                    arrayOf(
+                        Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ), CAMERA_PERMISSION
                 )
             }
         } else {

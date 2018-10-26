@@ -87,14 +87,14 @@ class CameraActivity : AppCompatActivity(), CameraBridgeViewBase.CvCameraViewLis
 
 //        OpencvNativeClass.faceDetection(rgbaMat?.nativeObjAddr ?: 0)
 
-        OpencvNativeClass.bodyDetection(rgbaMat?.nativeObjAddr ?: 0)
-
-        return rgbaMat!!
-//        if (rgbaMat == null || greyMat == null) {
-//            return rgbaMat!!
-//        }
-//        OpencvNativeClass.convertGray(rgbaMat?.nativeObjAddr?:0, greyMat?.nativeObjAddr?:0)
-//        return greyMat!!
+//        OpencvNativeClass.bodyDetection(rgbaMat?.nativeObjAddr ?: 0)
+//
+//        return rgbaMat!!
+        if (rgbaMat == null || greyMat == null) {
+            return rgbaMat!!
+        }
+        OpencvNativeClass.convertGray(rgbaMat?.nativeObjAddr?:0, greyMat?.nativeObjAddr?:0)
+        return greyMat!!
     }
 
 }
