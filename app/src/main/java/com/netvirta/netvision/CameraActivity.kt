@@ -85,16 +85,16 @@ class CameraActivity : AppCompatActivity(), CameraBridgeViewBase.CvCameraViewLis
     override fun onCameraFrame(inputFrame: Mat?): Mat {
         rgbaMat = inputFrame
 
-//        OpencvNativeClass.faceDetection(rgbaMat?.nativeObjAddr ?: 0)
+        OpencvNativeClass.lineDetection(rgbaMat?.nativeObjAddr ?: 0)
 
 //        OpencvNativeClass.bodyDetection(rgbaMat?.nativeObjAddr ?: 0)
 //
-//        return rgbaMat!!
-        if (rgbaMat == null || greyMat == null) {
-            return rgbaMat!!
-        }
-        OpencvNativeClass.convertGray(rgbaMat?.nativeObjAddr?:0, greyMat?.nativeObjAddr?:0)
-        return greyMat!!
+        return rgbaMat!!
+//        if (rgbaMat == null || greyMat == null) {
+//            return rgbaMat!!
+//        }
+//        OpencvNativeClass.convertGray(rgbaMat?.nativeObjAddr?:0, greyMat?.nativeObjAddr?:0)
+//        return greyMat!!
     }
 
 }
