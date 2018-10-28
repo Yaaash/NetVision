@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.Menu
 import android.view.SurfaceView
 import kotlinx.android.synthetic.main.activity_camera.*
 import org.opencv.android.BaseLoaderCallback
@@ -12,6 +13,8 @@ import org.opencv.android.LoaderCallbackInterface
 import org.opencv.android.OpenCVLoader
 import org.opencv.core.CvType
 import org.opencv.core.Mat
+import android.view.MenuItem
+
 
 /**
  * This activity shows the constant feed of the camera where:
@@ -23,9 +26,26 @@ import org.opencv.core.Mat
  */
 class CameraActivity : AppCompatActivity(), CameraBridgeViewBase.CvCameraViewListener {
 
+    /**
+     * Call back loader class to load opencv
+     */
     private var callbackLoader: BaseLoaderCallback = MyLoaderCallback(this@CameraActivity)
+
+    /**
+     * Default rgb Mat
+     */
     private var rgbaMat: Mat? = null
+
+    /**
+     * Grey scaled Mat
+     */
     private var greyMat: Mat? = null
+
+    /**
+     * Defines the detector type used to preview on [CameraActivity]
+     */
+    private var detecttorType = LINE_DETECT
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +54,22 @@ class CameraActivity : AppCompatActivity(), CameraBridgeViewBase.CvCameraViewLis
         // enable Camera View
         javaCameraView.visibility = SurfaceView.VISIBLE
         javaCameraView.setCvCameraViewListener(this)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_camera, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.action_grey -> detecttorType = GREY_SCALE
+            R.id.action_face -> detecttorType = FACE_DETECT
+            R.id.action_body -> detecttorType = BODY_DETECT
+            R.id.action_line -> detecttorType = LINE_DETECT
+            R.id.action_corner -> detecttorType = CORNER_DETECT
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {
@@ -85,16 +121,44 @@ class CameraActivity : AppCompatActivity(), CameraBridgeViewBase.CvCameraViewLis
     override fun onCameraFrame(inputFrame: Mat?): Mat {
         rgbaMat = inputFrame
 
-//        OpencvNativeClass.faceDetection(rgbaMat?.nativeObjAddr ?: 0)
-
-//        OpencvNativeClass.bodyDetection(rgbaMat?.nativeObjAddr ?: 0)
-//
-//        return rgbaMat!!
-        if (rgbaMat == null || greyMat == null) {
-            return rgbaMat!!
+        when (detecttorType) {
+            GREY_SCALE -> {
+                OpencvNativeClass.convertGray(rgbaMat?.nativeObjAddr ?: 0, greyMat?.nativeObjAddr ?: 0)
+                return greyMat!!
+            }
+            FACE_DETECT -> OpencvNativeClass.faceDetection(rgbaMat?.nativeObjAddr ?: 0)
+            BODY_DETECT -> OpencvNativeClass.bodyDetection(rgbaMat?.nativeObjAddr ?: 0)
+            CORNER_DETECT -> OpencvNativeClass.cornerDetection(rgbaMat?.nativeObjAddr ?: 0)
+            LINE_DETECT -> OpencvNativeClass.lineDetection(rgbaMat?.nativeObjAddr ?: 0)
         }
-        OpencvNativeClass.convertGray(rgbaMat?.nativeObjAddr?:0, greyMat?.nativeObjAddr?:0)
-        return greyMat!!
+        return rgbaMat!!
+    }
+
+    companion object {
+        /**
+         * Show Grey scaled image in CameraView
+         */
+        const val GREY_SCALE = 0
+
+        /**
+         * Detects faces in camera preview
+         */
+        const val FACE_DETECT = 1
+
+        /**
+         * Detects human bodies in camera preview
+         */
+        const val BODY_DETECT = 2
+        /**
+         * Detects lines in camera preview
+         */
+        const val LINE_DETECT = 3
+
+        /**
+         * Detects corners in camera preview
+         */
+        const val CORNER_DETECT = 4
+
     }
 
 }

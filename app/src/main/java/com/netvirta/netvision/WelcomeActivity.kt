@@ -106,6 +106,9 @@ class WelcomeActivity : AppCompatActivity() {
 
     companion object {
 
+        /**
+         * Camera Permission Request Code
+         */
         const val CAMERA_PERMISSION = 300
 
         init {
