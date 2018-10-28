@@ -29,18 +29,18 @@ void detect(Mat& frame){
 
     String face_cascade_name = "/sdcard/Download/cascade/haarcascade_frontalface_alt.xml";
     String eyes_cascade_name = "/sdcard/Download/cascade/haarcascade_eye_tree_eyeglasses.xml";
-    //syslog(LOG_CRIT, "hello syslog");
+
     CascadeClassifier face_cascade;
     CascadeClassifier eyes_cascade;
-    if( !face_cascade.load( face_cascade_name ) ){/* printf("--(!)Error loading\n")*/; return ; };
-    if( !eyes_cascade.load( eyes_cascade_name ) ){/* printf("--(!)Error loading\n")*/; return ; };
+    if( !face_cascade.load( face_cascade_name ) ){ printf("--(!)Error loading\n"); return ; };
+    if( !eyes_cascade.load( eyes_cascade_name ) ){ printf("--(!)Error loading\n"); return ; };
 
 
     std::vector<Rect> faces;
     Mat frame_gray;
 
-    cvtColor( frame, frame_gray, CV_BGR2GRAY );
-    equalizeHist( frame_gray, frame_gray );
+    cv::cvtColor( frame, frame_gray, CV_BGR2GRAY );
+    cv::equalizeHist( frame_gray, frame_gray );
 
     //-- Detect faces
 //    face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE, Size(30, 30) );
@@ -144,5 +144,6 @@ JNIEXPORT void JNICALL Java_com_netvirta_netvision_OpencvNativeClass_lineDetecti
     for (auto i : line) {
         cv::line(frame, cv::Point(i[0], i[1]), cv::Point(i[2], i[3]), cv::Scalar(0, 255, 0), 5, CV_AA);
     }
+
     return;
 }
