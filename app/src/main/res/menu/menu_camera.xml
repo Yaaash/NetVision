@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="@string/grey_scale"
+          app:showAsAction="never"
+          android:id="@+id/action_grey"/>
+    <item android:title="@string/face_detection"
+          app:showAsAction="never"
+          android:id="@+id/action_face"/>
+    <item android:title="@string/body_detection"
+          app:showAsAction="never"
+          android:id="@+id/action_body"/>
+    <item android:title="@string/line_detection"
+          app:showAsAction="never"
+          android:id="@+id/action_line"/>
+    <item android:title="@string/corner_detection"
+          app:showAsAction="never"
+          android:id="@+id/action_corner"/>
+</menu>

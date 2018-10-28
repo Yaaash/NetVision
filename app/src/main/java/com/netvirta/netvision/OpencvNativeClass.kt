@@ -13,4 +13,6 @@ object OpencvNativeClass {
     external fun bodyDetection(rgbaAddress: Long)
 
     external fun lineDetection(rgbaAddress: Long)
+
+    external fun cornerDetection(rgbaAddress: Long)
 }

@@ -50,6 +50,19 @@ JNIEXPORT void JNICALL Java_com_netvirta_netvision_OpencvNativeClass_bodyDetecti
  */
 JNIEXPORT void JNICALL Java_com_netvirta_netvision_OpencvNativeClass_lineDetection
         (JNIEnv *, jclass, jlong);
+
+/**
+ * Method to detect corners of an image
+ */
+void detectCorner(Mat &frame, Mat frame_gray);
+
+/*
+ * Class:     com_netvirta_netvision_OpencvNativeClass
+ * Method:    cornerDetection
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_com_netvirta_netvision_OpencvNativeClass_cornerDetection
+        (JNIEnv *, jclass, jlong);
 #ifdef __cplusplus
 }
 #endif

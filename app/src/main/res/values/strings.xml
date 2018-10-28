@@ -5,4 +5,9 @@
     <string name="camera_permission_message">We would like to access your camera for further processing</string>
     <string name="nah">Nah!</string>
     <string name="sure_go_ahead">Sure, Go Ahead!</string>
+    <string name="grey_scale">Grey Scale</string>
+    <string name="face_detection">Face Detection</string>
+    <string name="body_detection">Body Detection</string>
+    <string name="line_detection">Line Detection</string>
+    <string name="corner_detection">Corner Detection</string>
 </resources>
