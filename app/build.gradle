@@ -32,7 +32,7 @@ android {
             path "CMakeLists.txt"
         }
     }
-    sourceSets { main { jni.srcDirs = ['src/main/jni', 'D:/StudioProjects/NetVision/openCVLibrary343/src/main/jniLibs/'] } }
+    sourceSets { main { jni.srcDirs = ['src/main/jni', 'src/main/jniLibs/'] } }
 }
 
 dependencies {

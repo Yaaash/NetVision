@@ -107,54 +107,18 @@ JNIEXPORT void JNICALL Java_com_netvirta_netvision_OpencvNativeClass_lineDetecti
 
     Mat &frame = *(Mat *) rgbaAddress;
 
-    Mat image_noise;
-    GaussianBlur(frame, image_noise, cv::Size(3, 3), 0, 0);
+    Mat dst, cdst;
 
-    // edge detector
-    Mat edge_output;
-    Mat kernel;
-    Point anchor;
+    // Detect the edges of the image by using a Canny detector
+    Canny(frame, dst, 50, 200, 3);
+    cvtColor(dst, cdst, CV_GRAY2BGR);
 
-    // Convert image from RGB to gray
-    cv::cvtColor(image_noise, edge_output, cv::COLOR_RGB2GRAY);
-    // Binarize gray image
-    cv::threshold(edge_output, edge_output, 140, 255, cv::THRESH_BINARY);
-
-    // Create the kernel [-1 0 1]
-    // This kernel is based on the one found in the
-    // Lane Departure Warning System by Mathworks
-    anchor = Point(-1, -1);
-    kernel = Mat(1, 3, CV_32F);
-    kernel.at<float>(0, 0) = -1;
-    kernel.at<float>(0, 1) = 0;
-    kernel.at<float>(0, 2) = 1;
-
-    // Filter the binary image to obtain the edges
-    filter2D(edge_output, edge_output, -1, kernel, anchor, 0, cv::BORDER_DEFAULT);
-
-    // mask edge output
-    Mat mask_output;
-    cv::Mat mask = cv::Mat::zeros(edge_output.size(), edge_output.type());
-    cv::Point pts[4] = {
-            cv::Point(210, 720),
-            cv::Point(550, 450),
-            cv::Point(717, 450),
-            cv::Point(1280, 720)
-    };
-
-    // Create a binary polygon mask
-    cv::fillConvexPoly(mask, pts, 4, cv::Scalar(255, 0, 0));
-    // Multiply the edges image and the mask to get the output
-    cv::bitwise_and(edge_output, mask, mask_output);
-
-    // get lines
-    std::vector<cv::Vec4i> line;
-
-    // rho and theta are selected by trial and error
-    HoughLinesP(mask_output, line, 1, CV_PI / 180, 20, 20, 30);
-
-    for (auto i : line) {
-        cv::line(frame, cv::Point(i[0], i[1]), cv::Point(i[2], i[3]), cv::Scalar(0, 255, 0), 5, CV_AA);
+    vector<Vec4i> lines;
+    HoughLinesP(dst, lines, 1, CV_PI / 180, 50, 50, 10);
+    for (size_t i = 0; i < lines.size(); i++) {
+        Vec4i l = lines[i];
+        //  display the result by drawing the lines.
+        cv::line(frame, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(255, 0, 0), 3, CV_AA);
     }
 
     return;

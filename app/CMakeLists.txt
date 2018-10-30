@@ -4,13 +4,14 @@
 # Sets the minimum version of CMake required to build the native library.
 
 cmake_minimum_required(VERSION 3.4.1)
-set("OPENCV_DIR" C:/OpenCV-android-sdk)
 
 add_library(my-opencv-lib SHARED ${PROJECT_SOURCE_DIR}/src/main/cpp/com_netvirta_netvision_OpencvNativeClass.cpp)
 
 set(CMAKE_VERBOSE_MAKEFILE on)
 add_library(lib_opencv SHARED IMPORTED)
-set_target_properties(lib_opencv PROPERTIES IMPORTED_LOCATION ${PROJECT_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libopencv_java3.so)
+set_target_properties(lib_opencv PROPERTIES
+ IMPORTED_LOCATION
+ ${PROJECT_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libopencv_java3.so)
 
 find_library( # Sets the name of the path variable.
         log-lib
@@ -26,4 +27,4 @@ target_link_libraries( # Specifies the target library.
         # included in the NDK.
         ${log-lib})
 
-include_directories(${OPENCV_DIR}/sdk/native/jni/include)
+include_directories(${PROJECT_SOURCE_DIR}/src/main/jni/include)
